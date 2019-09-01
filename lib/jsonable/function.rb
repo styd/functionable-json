@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-require 'json' unless defined? ::JSON
+require 'json'
+require 'strscan'
 
 module JSONable
   class Function < Numeric
@@ -43,7 +44,7 @@ module JSONable
     end
 
     def cleanup_function!
-      @function.tr("\n", '').squeeze(' ')
+      function.tr("\n", '').squeeze(' ')
     end
   end
 end
