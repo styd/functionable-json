@@ -17,6 +17,14 @@ module JSONable
     end
 
     def scrape_function!
+      @file_name ? valid_function : invalid_function
+    end
+
+    def cleanup_function!
+      function.tr("\n", '').squeeze(' ')
+    end
+
+    def valid_function
       @function = +'function'
       open_braces = 0
 
@@ -43,8 +51,8 @@ module JSONable
       end
     end
 
-    def cleanup_function!
-      function.tr("\n", '').squeeze(' ')
+    def invalid_function
+      @function = 'undefined'
     end
   end
 end

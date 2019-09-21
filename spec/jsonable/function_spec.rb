@@ -21,6 +21,7 @@ RSpec.describe JSONable::Function do
       return 0
     }
   }
+  INVALID_FUNCTION = function(val, &method(:to_s))
 
   it 'is a kind of Numeric' do
     expect(FUNCTION1).to be_a Numeric
@@ -40,6 +41,7 @@ RSpec.describe JSONable::Function do
         "}"
       )
       expect({a: FUNCTION2}.to_json).to eq "{\"a\":function(arg) { return arg + 'km' }}"
+      expect({a: INVALID_FUNCTION}.to_json).to eq "{\"a\":undefined}"
     end
   end
 end
