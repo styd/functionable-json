@@ -31,20 +31,19 @@ And then execute:
 
 ```ruby
 {
-  speed: function(val) {
+  amount: function(val) {
            return '$' + parseFloat(val).toLocaleString();
          }
 }.to_json
-#=> "{\"speed\":function(val) { return '$' + parseFloat(val).toLocaleString(); }}"
+#=> "{\"amount\":function(val) { return '$' + parseFloat(val).toLocaleString(); }}"
 ```
 
 But, don't go wild just yet because there are limitations:
 - You cannot use `if` keyword because the way JavaScript uses it is different from
-  ruby. It is meant to be used for a simple function. One use case I'm targetting
-  is for formatting options to be used by JavaScript libraries.
+  ruby. Use ternary operators instead.
 - Also, don't put multiple functions on the same line. You'll get unexpected result
   if you do.
-- You should end statement with `;`.
+- You should end every statement with `;`.
 
 If you try the above example on your REPL (e.g. `irb` or `pry`) it won't
 work since the gem will try to find the file that stores the code. So, you
@@ -56,8 +55,8 @@ Well, technically, it's not a JavaScript function. It's a Ruby method named
 `function` that's available in any object. In JavaScript, a form like that is
 a _function declaration_, but in Ruby it's a _method invocation_. So, in that case,
 `val` needs to already exist before you call it, and it is. Both `function` and
-`val` are already a method of an object. If you want to use arguments with
-another name, you need to declare them as variable first.
+`val` are already methods of an object. If you want to use arguments with
+another name, you need to declare them as variables first.
 
 ```ruby
 arg1, arg2 = nil
@@ -72,7 +71,7 @@ arg1, arg2 = nil
 ### Use Case
 
 One example use case is [ApexCharts.RB](https://github.com/styd/apexcharts.rb)
-formatter. You can add tooltip formatter like this:
+formatter or other charting libraries'. You can add tooltip formatter like this:
 
 ```erb
 <%= line_chart data, tooltip: {y: {formatter: function(val) { return '$' + parseFloat(val).toLocaleString(); }}} %>
